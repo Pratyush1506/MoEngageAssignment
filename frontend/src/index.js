@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Search from './components/Search/Search';
+import Logout from './components/Logout/Logout';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Logout />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

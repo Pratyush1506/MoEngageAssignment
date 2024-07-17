@@ -100,6 +100,9 @@ const Search = () => {
         999
        ]
     
+    const userId = localStorage.getItem('userId');
+    const [id, setId] = useState(userId);
+
     const [searchCodes, setSearchCodes] = useState([]);
     const [inputCode, setInputCode] = useState('')
 
@@ -111,6 +114,7 @@ const Search = () => {
 
   return (
     <div>
+        <h1>{userId}</h1>
         <input 
             className='border-solid border-2 border-black p-2'
             type="text"

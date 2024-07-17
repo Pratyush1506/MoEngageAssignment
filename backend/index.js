@@ -62,16 +62,23 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   // Check if the user exists and the password is correct
-  db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
+  db.get('SELECT id FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
     if (err) {
       return res.status(500).send('Error checking user');
     }
     if (row) {
-      return res.status(200).send('Login successful');
+      // Return the user ID
+      res.status(200).json({ id: row.id, message: 'Login successful' });
     } else {
       return res.status(401).send('Invalid credentials');
     }
   });
+});
+
+//Logout endpoint
+app.post('/logout', (req, res) => {
+  // Perform logout actions if needed (e.g., clear session, etc.)
+  res.status(200).send('Logged out successfully');
 });
 
 app.listen(port, () => {

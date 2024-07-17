@@ -7,13 +7,20 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
-        try {
-          const response = await axios.post('http://localhost:3001/login', { username, password });
-          alert(response.data);
-        } catch (error) {
-          alert('Login failed');
-        }
-      };
+      try {
+        const response = await axios.post('http://localhost:3001/login', {
+          username,
+          password,
+        });
+        console.log('Login successful with ID:', response.data.id);
+        // Store user id in localStorage or state for use across components
+        localStorage.setItem('userId', response.data.id);
+        // Redirect or handle further actions after successful login
+      } catch (error) {
+        console.error('Login error:', error.response.data);
+        // Handle login error (display message, clear inputs, etc.)
+      }
+    };
 
   return (
     <div>
