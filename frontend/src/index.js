@@ -11,6 +11,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Search from './components/Search/Search';
 import Logout from './components/Logout/Logout';
+import Lists from './components/Lists/Lists';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     path: "/search",
     element: <Search />,
   },
+  {
+    path: "/lists",
+    element: <Lists />
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -39,7 +44,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

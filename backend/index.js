@@ -27,6 +27,22 @@ const db = new sqlite3.Database('./data.db', (err) => {
         console.log('Table "users" is ready');
       }
     });
+
+    // Create lists table if it doesn't exist
+    db.run(`CREATE TABLE IF NOT EXISTS lists (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      codes TEXT NOT NULL,
+      createdAt TEXT NOT NULL,
+      user_id INTEGER,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )`, (err) => {
+      if (err) {
+        console.error('Could not create lists table', err);
+      } else {
+        console.log('Table "lists" is ready');
+      }
+    });
   }
 });
 
@@ -80,6 +96,33 @@ app.post('/logout', (req, res) => {
   // Perform logout actions if needed (e.g., clear session, etc.)
   res.status(200).send('Logged out successfully');
 });
+
+// Save list endpoint
+app.post('/lists', (req, res) => {
+  const { name, codes, createdAt, userId } = req.body;
+  const codesString = JSON.stringify(codes);
+
+  db.run('INSERT INTO lists (name, codes, createdAt, user_id) VALUES (?, ?, ?, ?)', [name, codesString, createdAt, userId], function (err) {
+    if (err) {
+      return res.status(500).send('Error saving list');
+    }
+    res.status(201).send({ message: 'List saved successfully', id: this.lastID });
+  });
+});
+
+
+// Fetch lists for a user
+app.get('/lists/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  db.all('SELECT * FROM lists WHERE user_id = ?', [userId], (err, rows) => {
+    if (err) {
+      return res.status(500).send('Error fetching lists');
+    }
+    res.status(200).json(rows);
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

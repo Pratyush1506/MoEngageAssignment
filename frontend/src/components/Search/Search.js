@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+
 
 const Search = () => {
 
@@ -101,16 +103,36 @@ const Search = () => {
        ]
     
     const userId = localStorage.getItem('userId');
-    const [id, setId] = useState(userId);
 
     const [searchCodes, setSearchCodes] = useState([]);
-    const [inputCode, setInputCode] = useState('')
+    const [inputCode, setInputCode] = useState('');
+    const [listName, setListName] = useState('');
 
     const filterCodes = (input) => {
         const regexPattern = input.replace(/x/g, '\\d');
         const regex = new RegExp(`^${regexPattern}`);
         setSearchCodes(availableCodes.filter(code => regex.test(code.toString()))); 
     }
+
+    const saveList = async () => {
+        if (!listName) {
+          alert('Please enter a list name');
+          return;
+        }
+        const newList = {
+          name: listName,
+          codes: searchCodes,
+          createdAt: new Date().toISOString(),
+          userId // Include the userId in the request
+        };
+        try {
+          await axios.post('http://localhost:3001/lists', newList);
+          alert('List saved successfully!');
+        } catch (error) {
+          console.error('Error saving the list:', error);
+        }
+      };
+    
 
   return (
     <div>
@@ -122,6 +144,19 @@ const Search = () => {
             onChange={(e) => setInputCode(e.target.value)}
         />
         <button onClick={()=>filterCodes(inputCode)} >Search</button>
+
+
+        <div>
+            <input
+            className='border-solid border-2 border-black p-2'
+            type="text"
+            placeholder="Enter list name"
+            value={listName}
+            onChange={(e) => setListName(e.target.value)}
+            />
+            <button onClick={saveList}>Save List</button>
+        </div>
+
         <div>
             {
                 searchCodes.map((code,index) =>{
