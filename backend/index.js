@@ -31,7 +31,7 @@ const db = new sqlite3.Database('./data.db', (err) => {
 });
 
 app.get('/', (req,res)=>{
-    return res.status(400).send("Hello world");
+    return res.status(200).send("Hello world");
 })
 
 // Signup endpoint
