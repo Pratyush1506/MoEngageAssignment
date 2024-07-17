@@ -16,21 +16,25 @@ const Signup = () => {
     };
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className='flex flex-col justify-center items-center gap-8'>
+      <h2 className='text-3xl'>Signup</h2>
+      <div className="input-group flex flex-row gap-2">
       <input
+        className='border-solid border-2 border-black p-1'
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
+        className='border-solid border-2 border-black p-1'
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleSignup}>Signup</button>
+      <button className='border-solid border-2 border-black p-1' onClick={handleSignup}>Signup</button>
+      </div>
     </div>
   )
 }
