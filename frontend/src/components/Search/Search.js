@@ -135,29 +135,28 @@ const Search = () => {
     
 
   return (
-    <div>
-        <h1>{userId}</h1>
+    <div className='flex flex-col justify-center items-center gap-2 my-8'>
+      <div>
         <input 
             className='border-solid border-2 border-black p-2'
             type="text"
             value={inputCode}
             onChange={(e) => setInputCode(e.target.value)}
         />
-        <button onClick={()=>filterCodes(inputCode)} >Search</button>
+        <button className='border-solid border-2 border-black p-2' onClick={()=>filterCodes(inputCode)} >Search</button>
+      </div>
+      <div>
+          <input
+          className='border-solid border-2 border-black p-2'
+          type="text"
+          placeholder="Enter list name"
+          value={listName}
+          onChange={(e) => setListName(e.target.value)}
+          />
+          <button className='border-solid border-2 border-black p-2' onClick={saveList}>Save List</button>
+      </div>
 
-
-        <div>
-            <input
-            className='border-solid border-2 border-black p-2'
-            type="text"
-            placeholder="Enter list name"
-            value={listName}
-            onChange={(e) => setListName(e.target.value)}
-            />
-            <button onClick={saveList}>Save List</button>
-        </div>
-
-        <div>
+        <div className='flex flex-row'>
             {
                 searchCodes.map((code,index) =>{
                     const url = `https://http.dog/${code}.jpg`

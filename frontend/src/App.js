@@ -1,20 +1,30 @@
-import { Link } from 'react-router-dom';
 import './App.css';
+import LoginSignup from './components/LoginSignup/LoginSignup';
+import HomeScreen from './components/HomeScreen/HomeScreen';
+import { useState } from 'react';
+// import axios from 'axios';
 
 function App() {
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('userId'));
+
 
   return (
     <div className="App">
       <div>
-        <h1>Welcome to the HTTP Dog App</h1>
-        <nav>
-          <ul>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/signup">Signup</Link></li>
-            <li><Link to="/search">Search</Link></li>
-            <li><Link to="/Lists">Lists</Link></li>
-          </ul>
-        </nav>
+        <h1>Welcome to the App</h1>
+        <div>
+
+          {isLoggedIn && (
+            <HomeScreen setIsLoggedIn={setIsLoggedIn} />
+          )}
+
+          {!isLoggedIn && (
+            <LoginSignup />
+          )}
+
+        </div>
       </div>
     </div>
   );

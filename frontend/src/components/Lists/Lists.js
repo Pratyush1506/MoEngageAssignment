@@ -31,7 +31,6 @@ const Lists = () => {
             <li key={list.id}>
               <p>List ID: {list.id}</p>
               <p>Codes: {list.codes}</p>
-              {/* Add more details or actions as needed */}
             </li>
           ))}
         </ul>
